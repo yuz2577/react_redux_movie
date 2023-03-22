@@ -20,7 +20,6 @@ export const parsing = async (keyword) => {
   const $ = cherrio.load(html.data);
   // console.log($);
   const $thumbList = $(".cs_common_module .list_image_info .item");
-  console.log($thumbList);
 
   var thumb = [];
   $thumbList.each((idx, node) => {
