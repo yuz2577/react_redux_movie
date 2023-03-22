@@ -7,9 +7,14 @@ export type Image = {
 export interface thumbItem {
   id: number;
   type: string;
-  name: string;
-  image: string;
-  reviews: Array<Object>;
+  movieNm: string;
+  img: string;
+  openDt: string;
+  audiAcc: string;
+  audiChange: string;
+  parsingData: {
+    img: string;
+  };
 }
 
 export type THUMBLIST = {

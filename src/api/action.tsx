@@ -11,9 +11,9 @@ export const getCrntMovies = async (id: string, date: string) => {
     });
 };
 
-export const getDetailMovieDT = async () => {
+export const getDetailMovieDT = async (title: string) => {
   return await fetch(
-    `http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=N&listCount=50&ServiceKey=${"4T88O7K8R0551122Z490"}&title=${"스즈메의 문단속"}`
+    `http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=N&listCount=50&ServiceKey=${"4T88O7K8R0551122Z490"}&title=${title}`
   )
     .then((res) => res.json())
     .then((json) => {
