@@ -28,7 +28,7 @@ const CrntMoviePage = () => {
         border: solid 1px #e6e6e6;
         overflow: hidden;
         height: 300px;
-        margin: 10px 0;
+        margin-bottom: 20px;
         .rank {
           position: absolute;
           width: 25px;

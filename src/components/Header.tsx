@@ -3,9 +3,10 @@ import styled from "styled-components";
 
 const Header = () => {
   const HeaderBox = styled.div`
-    padding: 10px 0;
+    padding: 10px;
     display: flex;
     align-items: center;
+    /* width: 420px; */
     button {
       border: none;
       background: none;

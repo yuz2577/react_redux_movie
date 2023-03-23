@@ -4,13 +4,23 @@ import styled from "styled-components";
 import { useNavigate } from "react-router";
 const Tabs = () => {
   const TabsBox = styled.div`
+    display: flex;  
+    align-items:center;
+    height: 30px;
+    padding: 0 10px;
+    img {
+      width: 26px;
+      height: 26px;
+      opacity: .6;
+      cursor: pointer;
+    }
     ul {
       display: flex;
       justify-content: flex-end;
       list-style: none;
       padding: 0;
-      border: solid 2px red;
       width: 100%;
+      /* margin: .5rem; */
       li {
         margin-left: 1rem;
         font-size: 14px;
@@ -53,6 +63,11 @@ const Tabs = () => {
   };
   return (
     <TabsBox>
+      <button onClick={() => navigate(-1)}>
+        {location.pathname !== "/" &&
+          <img src="//icons.veryicon.com/png/o/miscellaneous/eva-fill/arrow-back-11.png" />
+        }
+      </button>
       <ul>
         {tabs.map((v, i) => (
           <li

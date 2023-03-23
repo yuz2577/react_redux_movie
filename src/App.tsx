@@ -32,6 +32,17 @@ function App() {
       border: 3px solid #ffffff;
     }
     /* border: solid 2px blue; */
+    button {
+      background: 0;
+      border: none;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      li {
+        list-style: none;
+      }
+    }
     height: 100vh;
     display: flex;
     align-items: center;
@@ -85,22 +96,33 @@ function App() {
     }
   `;
   const RightWrapper = styled.div`
+  
+    @media only screen and (min-width: 421px) {
+      width: 420px;
+    }
+    @media only screen and (max-width: 420px) {
+      width: 100vw;
+    }
     /* margin-left: 3rem; */
     overflow-y: scroll;
     height: 100vh;
-    width: 420px;
-    background: #fafafa;
-    padding: 0 10px;
+    background: white;
+    /* padding: 0 10px; */
     box-shadow: 0px 0px 80px 20px rgba(0, 0, 0, 0.06);
     position: relative;
     .fixed {
+      height: 90px;
+      box-shadow: 0px 0px 80px 20px rgba(0, 0, 0, 0.06);
+      /* border: solid 2px red; */
       position: fixed;
-      width: 420px;
-      background: rgb(250, 250, 250);
+      width: inherit;
+      /* width: 100%; */
+      background: #fafafa;
+      box-shadow: 0px 5px 20px -px rgba(0, 0, 0, 0.068);
       z-index: 10;
     }
     .page {
-      margin-top: 100px;
+      margin-top: 95px;
     }
   `;
 
