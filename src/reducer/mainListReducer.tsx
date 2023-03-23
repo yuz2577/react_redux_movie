@@ -1,6 +1,6 @@
 import produce from "immer";
 import { createReducer } from "typesafe-actions";
-import * as type from "./Type";
+import * as type from "../type/mainListType";
 
 export const initialState: type.THUMBLIST = {
   thumbList: [],

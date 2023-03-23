@@ -9,28 +9,28 @@ import Tabs from "./components/Tabs";
 
 function App() {
   const Body = styled.body`
-/* ===== Scrollbar CSS ===== */
-  /* Firefox */
-              font-size: 12px;
-  * {
-    scrollbar-width: auto;
-    scrollbar-color: #ffbbbb #ffffff;
-  }
+    /* ===== Scrollbar CSS ===== */
+    /* Firefox */
+    font-size: 12px;
+    * {
+      scrollbar-width: auto;
+      scrollbar-color: #ffbbbb #ffffff;
+    }
 
-  /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 10px;
-  }
+    /* Chrome, Edge, and Safari */
+    *::-webkit-scrollbar {
+      width: 10px;
+    }
 
-  *::-webkit-scrollbar-track {
-    background: #ffffff;
-  }
+    *::-webkit-scrollbar-track {
+      background: #ffffff;
+    }
 
-  *::-webkit-scrollbar-thumb {
-    background-color: #ffbbbb;
-    border-radius: 10px;
-    border: 3px solid #ffffff;
-  }
+    *::-webkit-scrollbar-thumb {
+      background-color: #ffbbbb;
+      border-radius: 10px;
+      border: 3px solid #ffffff;
+    }
     /* border: solid 2px blue; */
     height: 100vh;
     display: flex;
@@ -41,7 +41,6 @@ function App() {
     background: url("https://cdn.pet-friends.co.kr/resources/pc/img/background.png");
     background-repeat: no-repeat;
     background-size: cover;
-
   `;
   const LeftWrapper = styled.div`
     @media screen and (max-width: 1023px) {
@@ -54,6 +53,7 @@ function App() {
     padding: 0 4rem;
     /* border: solid 2px red; */
     img {
+      margin-top: 3rem;
       width: 20rem;
     }
     .title {
@@ -79,7 +79,7 @@ function App() {
         margin: 0.25rem;
       }
       button:hover {
-        background:#52c0ff;
+        background: #52c0ff;
         color: white;
       }
     }
@@ -94,13 +94,13 @@ function App() {
     box-shadow: 0px 0px 80px 20px rgba(0, 0, 0, 0.06);
     position: relative;
     .fixed {
-      position:fixed;
+      position: fixed;
       width: 420px;
       background: rgb(250, 250, 250);
       z-index: 10;
     }
     .page {
-      margin-top:100px;
+      margin-top: 100px;
     }
   `;
 

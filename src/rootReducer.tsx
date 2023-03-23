@@ -1,8 +1,28 @@
 import { combineReducers } from "redux";
-import thumbList from "./reducer";
-import setThumbList from "./reducer";
+import thumbList from "./reducer/mainListReducer";
+import movieInfo from "./reducer/movieInfoReducer";
+import setThumbList from "./reducer/mainListReducer";
+import persistReducer from "redux-persist/lib/persistReducer";
+import sessionStorage from "redux-persist/es/storage/session";
 
-const rootReducer = combineReducers({ thumbList });
-export type RootState = ReturnType<typeof rootReducer>;
+export interface persistData {
+  key: string;
+  sessionStorage: any;
+  storage: any;
+}
 
-export default rootReducer;
+const persistConfig: persistData = {
+  key: "data",
+  sessionStorage,
+  storage: sessionStorage,
+};
+
+const rootReducer = combineReducers({
+  thumbList: thumbList,
+  movieInfo: movieInfo,
+});
+// export type RootState = ReturnType<typeof rootReducer>;
+
+// export default rootReducer;
+
+export default persistReducer(persistConfig, rootReducer);

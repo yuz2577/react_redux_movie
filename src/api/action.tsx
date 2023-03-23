@@ -1,5 +1,6 @@
 import axios from "axios";
-import * as type from "../Type";
+import * as mainListType from "../type/mainListType";
+import * as movieInfoType from "../type/movieInfoType";
 
 export const getCrntMovies = async (id: string, date: string) => {
   return await fetch(
@@ -23,7 +24,17 @@ export const getDetailMovieDT = async (title: string) => {
 
 // ---------------------------------------------------------- //
 
-export const setThumbList = (thumbItemlist: type.thumbItem[]) => ({
+export const setThumbList = (thumbItemlist: mainListType.thumbItem[]) => ({
   type: "SET_THUMBLIST",
   payload: thumbItemlist,
+});
+
+export const setMovieInfo = (movieInfo: movieInfoType.movieInfo[]) => ({
+  type: "SET_MOVIEINFO",
+  payload: movieInfo,
+});
+
+export const initMovieInfo = (movieInfo: movieInfoType.movieInfo[]) => ({
+  type: "INIT_MOVIEINFO",
+  payload: [],
 });

@@ -1,8 +1,4 @@
-import { setThumbList } from "./api/action";
-
-export type Image = {
-  src: string;
-};
+import { setThumbList } from "../api/action";
 
 export interface thumbItem {
   id: number;
