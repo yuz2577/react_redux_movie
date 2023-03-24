@@ -10,7 +10,7 @@ import {
 } from "../../api/action";
 // import { getImgData, movieSearch } from "../../api/action";
 import config from "../../api/config";
-import { parsing } from "../../carwling";
+import { detailParsing, parsing } from "../../carwling";
 
 const CrntMoviePage = () => {
   const CrntBox = styled.div`
@@ -67,9 +67,9 @@ const CrntMoviePage = () => {
   const crntList = useSelector((state: any) => state.thumbList.thumbList);
   console.log(crntList);
 
-  const handleUrl = (data: any) => {
-    navigate(`curMovie/${data.movieNm}`);
+  const handleUrl = async (data: any) => {
     dispatch(setMovieInfo({ ...data }));
+    navigate(`curMovie/${data.movieNm}`);
   };
 
   const fetchData = async () => {

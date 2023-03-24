@@ -11,6 +11,7 @@ function App() {
   const Body = styled.body`
     /* ===== Scrollbar CSS ===== */
     /* Firefox */
+    overflow-x: hidden;
     font-size: 12px;
     * {
       scrollbar-width: auto;
@@ -96,7 +97,6 @@ function App() {
     }
   `;
   const RightWrapper = styled.div`
-  
     @media only screen and (min-width: 421px) {
       width: 420px;
     }
@@ -104,6 +104,7 @@ function App() {
       width: 100vw;
     }
     /* margin-left: 3rem; */
+    overflow-x: hidden;
     overflow-y: scroll;
     height: 100vh;
     background: white;
