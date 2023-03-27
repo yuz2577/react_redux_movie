@@ -5,6 +5,7 @@ import styled from "styled-components";
 import {
   getCrntMovies,
   initMovieInfo,
+  setLoading,
   setMovieInfo,
   setThumbList,
 } from "../../api/action";
@@ -65,6 +66,8 @@ const CrntMoviePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const crntList = useSelector((state: any) => state.thumbList.thumbList);
+  const data = useSelector((state: any) => state.loading.loading);
+  console.log(data);
   console.log(crntList);
 
   const handleUrl = async (data: any) => {
@@ -73,10 +76,10 @@ const CrntMoviePage = () => {
   };
 
   const fetchData = async () => {
+    dispatch(setLoading(true));
     const crntMoviesRes = await getCrntMovies(config.MY_KEY, config.today);
     const crntMovieList = crntMoviesRes.boxOfficeResult.dailyBoxOfficeList;
     const imgParsingList = await parsing("영화순위");
-    console.log(imgParsingList, "<parsing");
     crntMovieList.map((v: any, i: number) => {
       // v.parsingData = imgParsingList[i]
       // if (v.movieNm === )
@@ -87,11 +90,13 @@ const CrntMoviePage = () => {
       });
     });
     dispatch(setThumbList(crntMovieList));
+    dispatch(setLoading(false));
   };
   useEffect(() => {
-    // if (!crntList?.img) {
     dispatch(initMovieInfo([]));
-    fetchData();
+    if (crntList.length === 0) {
+      fetchData();
+    }
     // }
   }, []);
 

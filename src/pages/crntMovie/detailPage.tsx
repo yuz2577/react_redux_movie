@@ -42,8 +42,12 @@ const DetailPage = () => {
         font-size: 13px;
         font-weight: 600;
       }
+      .scrollX {
+        overflow-x: scroll;
+        display: flex;
+      }
       .member_info_box {
-        /* margin: 0 30px; */
+        margin-right: 20px;
         img {
           width: 100px;
           border-radius: 10px;
@@ -69,7 +73,7 @@ const DetailPage = () => {
   const setting = {
     infinite: false,
     slidesToShow: 3,
-    slidesToScroll: 1,
+    // slidesToScroll: 1,
   };
 
   const handleUrl = async (data: any, value: any) => {
@@ -133,7 +137,8 @@ const DetailPage = () => {
       <Line />
       <div className="member_container">
         <p className="title">감독/출연진</p>
-        <Slider {...setting}>
+        <div className="scrollX">
+          {/* <Slider {...setting}> */}
           {data?.member?.map((v: any, i: any) => (
             <div className="member_info_box">
               <img src={v.img} />
@@ -144,12 +149,14 @@ const DetailPage = () => {
               </div>
             </div>
           ))}
-        </Slider>
+        </div>
+        {/* </Slider> */}
       </div>
       <Line />
       <div className="member_container">
         <p className="title">비슷한 영화를 찾고 있나요?</p>
-        <Slider {...setting}>
+        {/* <Slider {...setting}> */}
+        <div className="scrollX">
           {data?.recommend?.map((v: any, i: any) => (
             <div className="member_info_box" onClick={() => handleUrl(data, v)}>
               <img src={v.img} />
@@ -158,7 +165,8 @@ const DetailPage = () => {
               </div>
             </div>
           ))}
-        </Slider>
+          {/* </Slider> */}
+        </div>
       </div>
     </DetailPageContainer>
   );

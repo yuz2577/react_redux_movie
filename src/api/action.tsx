@@ -1,6 +1,8 @@
 import axios from "axios";
+import movieInfo from "../reducer/movieInfoReducer";
 import * as mainListType from "../type/mainListType";
 import * as movieInfoType from "../type/movieInfoType";
+import * as loadingType from "../type/loadingType";
 
 export const getCrntMovies = async (id: string, date: string) => {
   return await fetch(
@@ -37,4 +39,9 @@ export const setMovieInfo = (movieInfo: movieInfoType.movieInfo[]) => ({
 export const initMovieInfo = (movieInfo: movieInfoType.movieInfo[]) => ({
   type: "INIT_MOVIEINFO",
   payload: [],
+});
+
+export const setLoading = (loading: boolean) => ({
+  type: "SET_LOADING",
+  payload: loading,
 });

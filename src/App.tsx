@@ -6,6 +6,8 @@ import { routes } from "./routes";
 import styled from "styled-components";
 import Header from "./components/Header";
 import Tabs from "./components/Tabs";
+import Loading from "./components/common/Loading";
+import { useSelector } from "react-redux";
 
 function App() {
   const Body = styled.body`
@@ -127,6 +129,9 @@ function App() {
     }
   `;
 
+  // const data = useSelector((state: any) => state.loading.loading);
+  // console.log(data);
+
   return (
     <Body>
       <LeftWrapper>
@@ -146,6 +151,7 @@ function App() {
         />
       </LeftWrapper>
       <RightWrapper>
+        <Loading />
         <div className="fixed">
           <Header />
           <Tabs />
