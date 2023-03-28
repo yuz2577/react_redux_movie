@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux/es/exports";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import styled from "styled-components";
 import {
   getCrntMovies,
   initMovieInfo,
   setLoading,
   setMovieInfo,
+  setTabState,
   setThumbList,
 } from "../../api/action";
 // import { getImgData, movieSearch } from "../../api/action";
@@ -64,6 +65,7 @@ const CrntMoviePage = () => {
     }
   `;
   const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
   const crntList = useSelector((state: any) => state.thumbList.thumbList);
   const data = useSelector((state: any) => state.loading.loading);
@@ -72,7 +74,7 @@ const CrntMoviePage = () => {
 
   const handleUrl = async (data: any) => {
     dispatch(setMovieInfo({ ...data }));
-    navigate(`curMovie/${data.movieNm}`);
+    navigate(`/curMovie/${data.movieNm}`);
   };
 
   const fetchData = async () => {
@@ -99,6 +101,12 @@ const CrntMoviePage = () => {
     }
     // }
   }, []);
+
+  useEffect(() => {
+    if (["/current", "/"].includes(location.pathname)) {
+      dispatch(setTabState("current"));
+    }
+  }, [location.pathname]);
 
   return (
     <CrntBox>

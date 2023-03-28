@@ -6,10 +6,14 @@ import { useSelector } from "react-redux";
 
 const Loading = () => {
   const LoadingWrap = styled.div`
-    border: solid 2px blue;
-    position: absolute;
+    @media only screen and (min-width: 421px) {
+      width: 420px;
+    }
+    @media only screen and (max-width: 420px) {
+      width: 100vw;
+    }
+    position: fixed;
     z-index: 100;
-    width: 100vw;
     height: 100%;
     display: flex;
     align-items: center;
@@ -17,9 +21,12 @@ const Loading = () => {
     background: #ffffff71;
   `;
 
-  const data = useSelector((state: any) => state.loading.loading);
-  console.log(data);
-  return (
+  const loading = useSelector((state: any) => state.loading.loading);
+  console.log(loading);
+
+  console.log(document.getElementsByTagName("body"));
+
+  return loading ? (
     <LoadingWrap>
       <FontAwesomeIcon
         icon={faSpinner}
@@ -29,6 +36,8 @@ const Loading = () => {
         spin
       />
     </LoadingWrap>
+  ) : (
+    <span></span>
   );
 };
 

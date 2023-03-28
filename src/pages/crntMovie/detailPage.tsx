@@ -1,14 +1,19 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { detailParsing } from "../../carwling";
 import Line from "../../components/common/Line";
-import { initMovieInfo, setMovieInfo } from "../../api/action";
+import {
+  initMovieInfo,
+  setLoading,
+  setMovieInfo,
+  setTabState,
+} from "../../api/action";
 
 const DetailPage = () => {
   const DetailPageContainer = styled.div`
@@ -66,10 +71,13 @@ const DetailPage = () => {
     }
   `;
   const params = useParams();
+  const location = useLocation();
+  console.log(location.pathname.indexOf("/movie"));
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const data = useSelector((state: any) => state.movieInfo.movieInfo);
-  console.log(data, "<<<<<dat");
+  const tabState = useSelector((state: any) => state.tabState);
+  console.log(tabState, "<<<<<dat");
   const setting = {
     infinite: false,
     slidesToShow: 3,
@@ -77,13 +85,13 @@ const DetailPage = () => {
   };
 
   const handleUrl = async (data: any, value: any) => {
-    navigate(`/curMovie/${value.movieNm}`);
+    navigate(`/movie/${value.movieNm}`);
+    dispatch(setTabState("movie"));
   };
 
   const fetchData = async (title: any) => {
+    dispatch(setLoading(true));
     const result = await detailParsing(`영화 ${title}`);
-    console.log(data, "<data222");
-    console.log(result, "<result222");
     dispatch(
       setMovieInfo({
         ...data,
@@ -91,12 +99,20 @@ const DetailPage = () => {
         parsingData: { ...data.parsingData, img: result.img },
       })
     );
+    dispatch(setLoading(false));
   };
 
   useEffect(() => {
     fetchData(params.title);
-    console.log("run");
   }, [params.title]);
+
+  useEffect(() => {
+    if (location.pathname.indexOf("/movie") < 0) {
+      dispatch(setTabState("current"));
+    } else {
+      dispatch(setTabState("movie"));
+    }
+  }, [location.pathname]);
   return (
     <DetailPageContainer>
       <div>
@@ -121,14 +137,18 @@ const DetailPage = () => {
                 <span>개봉</span>
                 <text>{data.startDate}</text>
               </li>
-              <li>
-                <span>관객증감률</span>
-                <text>{data.audiChange}%</text>
-              </li>
-              <li>
-                <span>누적관객수</span>
-                <text>{data.audiAcc}명</text>
-              </li>
+              {location.pathname.indexOf("/movie") < 0 && (
+                <>
+                  <li>
+                    <span>관객증감률</span>
+                    <text>{data.audiChange}%</text>
+                  </li>
+                  <li>
+                    <span>누적관객수</span>
+                    <text>{data.audiAcc}명</text>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

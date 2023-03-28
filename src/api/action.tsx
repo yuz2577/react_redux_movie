@@ -45,3 +45,8 @@ export const setLoading = (loading: boolean) => ({
   type: "SET_LOADING",
   payload: loading,
 });
+
+export const setTabState = (tabState: string) => ({
+  type: "SET_TABSTATE",
+  payload: tabState,
+});

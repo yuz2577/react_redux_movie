@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { useLocation } from "react-router";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setTabState } from "../api/action";
 const Tabs = () => {
   const TabsBox = styled.div`
-    display: flex;  
-    align-items:center;
+    display: flex;
+    align-items: center;
     height: 30px;
     padding: 0 10px;
     img {
       width: 26px;
       height: 26px;
-      opacity: .6;
+      opacity: 0.6;
       cursor: pointer;
     }
     ul {
@@ -35,8 +38,9 @@ const Tabs = () => {
   `;
 
   const location = useLocation();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [tabState, setTabState] = useState(location.pathname);
+  const tabState = useSelector((state: any) => state.tabState.tabState);
   interface tabProvider {
     name: string;
     id: string;
@@ -45,28 +49,28 @@ const Tabs = () => {
   const [tabs] = React.useState<tabProvider[]>([
     {
       name: "현재상영영화",
-      id: "/",
+      id: "current",
     },
     {
       name: "영화목록",
-      id: "movieList",
+      id: "movie",
     },
     {
       name: "배우목록",
-      id: "actorList",
+      id: "actor",
     },
   ]);
 
-  const handleTabs = (url: any) => {
-    setTabState(url);
+  const handleTabs = (url: string) => {
     navigate(url);
+    dispatch(setTabState(url));
   };
   return (
     <TabsBox>
       <button onClick={() => navigate(-1)}>
-        {location.pathname !== "/" &&
+        {location.pathname !== "/" && location.pathname !== "/current" && (
           <img src="//icons.veryicon.com/png/o/miscellaneous/eva-fill/arrow-back-11.png" />
-        }
+        )}
       </button>
       <ul>
         {tabs.map((v, i) => (

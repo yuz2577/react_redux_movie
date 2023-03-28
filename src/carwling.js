@@ -81,27 +81,37 @@ export const detailParsing = async (keyword) => {
     story.push(storydata);
   });
 
+  console.log($content);
   $content.each((i, n) => {
+    console.log($content.length);
     // const title = $(n).find("dd").text().split("<span>");
+    console.log($(n).find(".info_group dd").html());
+    console.log(i, "<ii");
     info.push($(n).find("dd").html());
     // genre_ctry.push(title);
   });
-  content = info[0].split("</span>");
+  console.log(info, "<<info");
+  content = info?.[0]?.split("</span>");
   var indexArr = [];
-  content.map((v, i) => {
+  content?.map((v, i) => {
     indexArr.push(v.indexOf("<span"));
   });
-  content = content.map((v, i) =>
+  content = content?.map((v, i) =>
     indexArr[i] > 0 ? v.substr(0, indexArr[i]) : v
   );
-  content.push(info[1]);
+  content?.push(info?.[1]);
 
   $people.each((i, n) => {
     const peopleImg = $(n).find("img").attr("src");
-    const peopleName = $(n).find(".title_box .name.type_ell_2 a").text();
-    const peoplePosition = $(n)
-      .find(".title_box .sub_text.type_ell_2 a")
-      .text();
+    console.log($(n).find(".title_box .name.type_ell_2 a").text());
+    const peopleName =
+      $(n).find(".title_box .name.type_ell_2 a").text() !== ""
+        ? $(n).find(".title_box .name.type_ell_2 a").text()
+        : $(n).find(".title_box .name").text();
+    const peoplePosition =
+      $(n).find(".title_box .sub_text.type_ell_2 a").text() !== ""
+        ? $(n).find(".title_box .sub_text.type_ell_2 a").text()
+        : $(n).find(".title_box .sub_text.type_ell_2").text();
     people.push({
       img: peopleImg,
       name: peopleName,
@@ -122,10 +132,10 @@ export const detailParsing = async (keyword) => {
   console.log(recommend, "<recommend");
 
   let res = {
-    genre: content[0],
-    country: content[1],
-    runtime: content[2],
-    startDate: content[3],
+    genre: content?.[0],
+    country: content?.[1],
+    runtime: content?.[2],
+    startDate: content?.[3],
     story: story[0],
     member: people,
     recommend: recommend,
