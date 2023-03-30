@@ -25,12 +25,12 @@ export const parsing = async (keyword) => {
   // console.log(html);
   const $ = cherrio.load(html.data);
   // console.log($);
-  const $thumbList = $(".mcs_common_module .list_image_info .item");
+  const $currentList = $(".mcs_common_module .list_image_info .item");
   const $txtList = $(".mcs_common_module .list_image_info .title_box");
 
   var thumb = [];
   var txt = [];
-  $thumbList.each((idx, node) => {
+  $currentList.each((idx, node) => {
     const img = $(node).find("img").attr("src");
     // console.log(title);
     thumb.push(img);

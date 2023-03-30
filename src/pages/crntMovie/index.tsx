@@ -67,7 +67,7 @@ const CrntMoviePage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const crntList = useSelector((state: any) => state.thumbList.thumbList);
+  const crntList = useSelector((state: any) => state.currentList.currentList);
   const data = useSelector((state: any) => state.loading.loading);
   console.log(data);
   console.log(crntList);
@@ -94,6 +94,7 @@ const CrntMoviePage = () => {
     dispatch(setThumbList(crntMovieList));
     dispatch(setLoading(false));
   };
+
   useEffect(() => {
     dispatch(initMovieInfo([]));
     if (crntList.length === 0) {

@@ -14,7 +14,7 @@ export interface thumbItem {
 }
 
 export type THUMBLIST = {
-  thumbList: Array<thumbItem>;
+  currentList: Array<thumbItem>;
 };
 
 export type setThumbListAction = ReturnType<typeof setThumbList>;

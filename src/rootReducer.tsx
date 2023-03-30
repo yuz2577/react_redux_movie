@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import thumbList from "./reducer/mainListReducer";
+import currentList from "./reducer/mainListReducer";
 import movieInfo from "./reducer/movieInfoReducer";
 import loadingSet from "./reducer/loadingReducer";
 import setThumbList from "./reducer/mainListReducer";
@@ -20,7 +20,7 @@ const persistConfig: persistData = {
 };
 
 const rootReducer = combineReducers({
-  thumbList: thumbList,
+  currentList: currentList,
   movieInfo: movieInfo,
   loading: loadingSet,
   tabState: tabStateSet,

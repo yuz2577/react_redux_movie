@@ -28,7 +28,7 @@ export const routes: Array<object> = [
     element: <DetailPage />,
   },
   {
-    path: "/movieList",
+    path: "/movie",
     exact: true,
     strict: false,
     element: <MovieListPage />,
