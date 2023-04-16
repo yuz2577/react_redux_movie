@@ -56,6 +56,59 @@ function App() {
     background: url("https://cdn.pet-friends.co.kr/resources/pc/img/background.png");
     background-repeat: no-repeat;
     background-size: cover;
+
+    .movie_list_container {
+      > p {
+        display: flex;
+        justify-content: flex-end;
+      }
+      ul {
+        padding: 0;
+        list-style: none;
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        li {
+          cursor: pointer;
+          width: 120px;
+          /* border: solid 2px blue; */
+          border: solid 1px #e6e6e6;
+          overflow: hidden;
+          height: 250px;
+          margin-bottom: 20px;
+          .rank {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #bdbdbdbb;
+            color: white;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          img {
+            height: 180px;
+          }
+          .movie_info_box {
+            padding: 5px;
+            p {
+              font-size: 12px;
+              font-weight: 600;
+              margin: 0;
+              width: 110px;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+            .movie_detail_info {
+              margin-top: 3px;
+              font-size: 11.5px;
+            }
+          }
+        }
+      }
+    }
   `;
   const LeftWrapper = styled.div`
     @media screen and (max-width: 1023px) {

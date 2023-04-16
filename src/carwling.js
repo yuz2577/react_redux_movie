@@ -100,6 +100,7 @@ export const detailParsing = async (keyword) => {
     indexArr[i] > 0 ? v.substr(0, indexArr[i]) : v
   );
   content?.push(info?.[1]);
+  console.log($people);
 
   $people.each((i, n) => {
     const peopleImg = $(n).find("img").attr("src");
@@ -145,4 +146,22 @@ export const detailParsing = async (keyword) => {
   return res;
 };
 
+export const steelCutParsing = async (keyword) => {
+  const html = await getHTML(keyword);
+  console.log(keyword);
+  // console.log(html);
+  const $ = cherrio.load(html.data);
+  // console.log($);
+  const $imgBox = $(
+    ".mcs_common_module .sec_movie_photo ._image_base_stillcut .movie_photo_list .grid_box ._item"
+  );
+
+  var steelCut = [];
+  console.log($imgBox, "<imgBox");
+  $imgBox.each((idx, node) => {
+    const img = $(node).find("img").attr("data-img-src");
+    steelCut.push(img);
+  });
+  return steelCut;
+};
 // parsing("현재상영영화순위");

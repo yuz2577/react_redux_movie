@@ -25,9 +25,10 @@ export const getDetailMovieDT = async (title: string) => {
     });
 };
 
-export const getMovieList = async () => {
+export const getMovieList = async (page: number) => {
+  console.log(process.env.REACT_APP_TMDB_KEY);
   return await fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&with_watch_providers=[8,96,337]&watch_region=KR&language=ko-KR`
+    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&with_watch_providers=[8,96,337]&watch_region=KR&language=ko-KR&page=${page}`
   ).then((res) => {
     return res.json();
   });
