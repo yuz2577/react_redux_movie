@@ -25,10 +25,14 @@ export const getDetailMovieDT = async (title: string) => {
     });
 };
 
-export const getMovieList = async (page: number) => {
+export const getMovieList = async (page: number, genre: string) => {
   console.log(process.env.REACT_APP_TMDB_KEY);
   return await fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&with_watch_providers=[8,96,337]&watch_region=KR&language=ko-KR&page=${page}`
+    `https://api.themoviedb.org/3/discover/movie?api_key=${
+      process.env.REACT_APP_TMDB_KEY
+    }&with_watch_providers=[8,96,337]&watch_region=KR&language=ko-KR&page=${page}${
+      genre ? `&with_genres=${genre}` : ""
+    }`
   ).then((res) => {
     return res.json();
   });
@@ -45,9 +49,16 @@ export const getGenreList = async () => {
 
 // ---------------------------------------------------------- //
 
+// 현재상영영화 (MAIN)
 export const setThumbList = (thumbItemlist: mainListType.thumbItem[]) => ({
   type: "SET_THUMBLIST",
   payload: thumbItemlist,
+});
+
+// 영화순위
+export const setMovieList = (movieList: any[]) => ({
+  type: "SET_MOVIE_LIST",
+  payload: movieList,
 });
 
 export const setMovieInfo = (movieInfo: movieInfoType.movieInfo[]) => ({
@@ -68,4 +79,14 @@ export const setLoading = (loading: boolean) => ({
 export const setTabState = (tabState: string) => ({
   type: "SET_TABSTATE",
   payload: tabState,
+});
+
+export const setGenreList = (genreList: any[]) => ({
+  type: "SET_GENRE_LIST",
+  payload: genreList,
+});
+
+export const setGenreType = (genreType: string) => ({
+  type: "SET_GENRE_TYPE",
+  payload: genreType,
 });

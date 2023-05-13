@@ -123,14 +123,14 @@ const DetailPage = () => {
     const result = await detailParsing(`영화 ${title}`);
     const steelCut = await steelCutParsing(`영화 ${title} 포토`);
 
-    dispatch(
-      setMovieInfo({
-        ...data,
-        ...result,
-        steelCut: steelCut,
-        parsingData: { ...data.parsingData, img: result.img },
-      })
-    );
+    // dispatch(
+    //   setMovieInfo({
+    //     ...data,
+    //     ...result,
+    //     steelCut: steelCut,
+    //     parsingData: { ...data.parsingData, img: result.img },
+    //   })
+    // );
     dispatch(setLoading(false));
   };
 

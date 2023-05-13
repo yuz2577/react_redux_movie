@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const Header = () => {
@@ -29,6 +30,7 @@ const Header = () => {
       font-size: 12px;
     }
   `;
+
   return (
     <HeaderBox>
       <button>

@@ -6,6 +6,8 @@ import setThumbList from "./reducer/mainListReducer";
 import persistReducer from "redux-persist/lib/persistReducer";
 import sessionStorage from "redux-persist/es/storage/session";
 import tabStateSet from "./reducer/tanStateReducer";
+import genreListSet from "./reducer/genreReducer";
+import movieList from "./reducer/movieListReducer";
 
 export interface persistData {
   key: string;
@@ -21,9 +23,11 @@ const persistConfig: persistData = {
 
 const rootReducer = combineReducers({
   currentList: currentList,
+  movieList: movieList,
   movieInfo: movieInfo,
   loading: loadingSet,
   tabState: tabStateSet,
+  genreList: genreListSet,
 });
 // export type RootState = ReturnType<typeof rootReducer>;
 

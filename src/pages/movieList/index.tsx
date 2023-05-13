@@ -2,12 +2,21 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { getGenreList, getMovieList } from "../../api/action";
+import {
+  getGenreList,
+  getMovieList,
+  setGenreType,
+  setMovieInfo,
+} from "../../api/action";
 import { useInView } from "react-intersection-observer";
-
+import { setGenreList, setMovieList } from "../../api/action";
+import { useSelector } from "react-redux";
 const MovieListPage = () => {
   const MovieContainer = styled.div`
-    /* border: solid 2px blue; */
+    .movie_detail_info {
+      width: 100%;
+      border: solid 2px blue;
+    }
   `;
 
   const dispatch = useDispatch();
@@ -17,13 +26,17 @@ const MovieListPage = () => {
     threshold: 0,
   });
 
-  const [movieList, setMovieList] = useState<any | null>([]);
   const [page, setPage] = useState(1);
   const [fetchSuccess, setFetchSuccess] = useState(false);
-
+  const { genreType, genreList } = useSelector((state: any) => state.genreList);
+  console.log(genreList, "<gen");
+  const { movieList } = useSelector((state: any) => state.movieList);
+  const state = useSelector((state: any) => state);
+  console.log(state);
   const handleUrl = async (data: any) => {
-    // dispatch(setMovieList({ ...data }));
-    navigate(`/curMovie/${data.movieNm}`);
+    console.log(data, "<data");
+    dispatch(setMovieInfo({ ...data }));
+    navigate(`/movie/${data.title}`);
   };
 
   const addPage = () => {
@@ -31,30 +44,63 @@ const MovieListPage = () => {
     console.log("더해졌다!");
   };
 
-  const fetchMediaProvider = async (page: number) => {
-    const genreList = await getGenreList();
-    console.log(genreList);
-    const res = await getMovieList(page);
-    console.log(res);
-    console.log(
-      "https://www.themoviedb.org/t/p/w220_and_h330_face/z56bVX93oRG6uDeMACR7cXCnAbh.jpg"
-    );
-    const movieArr: any[] = [...movieList, ...res.results];
+  const fetchMediaProvider = async (page: number, genre: string) => {
+    const res = await getMovieList(page, genre);
+    interface movieArrProvider {
+      genre_ids: any;
+    }
+    const movieArr: Array<movieArrProvider> = [...movieList, ...res.results];
+    movieArr.map((v: any, i: any) => {
+      var genreArr: any = [];
+      v.genre_ids.map((a: any) =>
+        genreList.map((value: any, index: any) => {
+          if (a === value.id) {
+            genreArr.push({ name: value.name, id: value.id });
+            v.genre_ids = genreArr;
+          }
+        })
+      );
+    });
+    dispatch(setMovieList(movieArr));
     console.log(movieArr, "?????");
     setMovieList(movieArr);
     setFetchSuccess(true);
   };
 
-  console.log(movieList);
-  console.log(movieList.length % 3, "page/20");
+  const fetchData = async (page: number, genre: string) => {
+    const genreList = await getGenreList();
+    dispatch(setGenreList(genreList.genres));
+    const res = await getMovieList(page, "");
+    console.log(res, "<Resres");
+
+    res.results.map((v: any, i: any) => {
+      var genreArr: any = [];
+      console.log(v.genre_ids, "<v.genre_ids");
+      v.genre_ids.map((a: any) =>
+        genreList.map((value: any, index: any) => {
+          if (a === value.id) {
+            genreArr.push({ name: value.name, id: value.id });
+            v.genre_ids = genreArr;
+          }
+        })
+      );
+    });
+    dispatch(setMovieList(res.results));
+  };
 
   useEffect(() => {
-    fetchMediaProvider(page);
+    if (movieList.length === 0) {
+      fetchData(page, genreType.id);
+    } else {
+      fetchMediaProvider(page, genreType.id);
+    }
   }, [page]);
+
+  console.log(page, page);
 
   useEffect(() => {
     console.log(ref, "<Ref?");
-    if (inView && fetchSuccess) {
+    if (inView) {
       console.log("ggggggggggg");
       addPage();
     }
@@ -63,7 +109,8 @@ const MovieListPage = () => {
   return (
     <>
       <div className="movie_list_container">
-        <p>Netflix, Disney, Naver-Movie 제공</p>
+        <p>Netflix, Disney, Naver-Movie 통계</p>
+
         <ul>
           {movieList?.map(
             (v: any, i: any) =>
@@ -72,14 +119,23 @@ const MovieListPage = () => {
                   <div className="rank">{i + 1}</div>
                   <img
                     src={`https://www.themoviedb.org/t/p/w220_and_h330_face${v.poster_path}`}
+                    alt=""
                   />
                   <div className="movie_info_box">
                     <p>{v.title}</p>
-                    <div className="movie_detail_info">
+                    <div
+                      className="movie_detail_info"
+                      style={{
+                        width: "100px",
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
                       {v.release_date}
-                      {/* 개봉: {v.openDt} <br />
-                관객수: {v.audiAcc}명<br />
-                관객증감률: {v.audiChange}% */}
+                      <br />
+                      {v.genre_ids.map((v: any, i: number) => v.name) +
+                        " "}{" "}
                     </div>
                   </div>
                 </li>

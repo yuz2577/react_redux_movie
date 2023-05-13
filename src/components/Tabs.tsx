@@ -4,13 +4,19 @@ import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setTabState } from "../api/action";
+import { setGenreType, setTabState } from "../api/action";
 const Tabs = () => {
   const TabsBox = styled.div`
     display: flex;
     align-items: center;
     height: 30px;
     padding: 0 10px;
+    select {
+      height: 20px;
+      border: solid 1px grey;
+      font-size: 9px;
+      width: 100px;
+    }
     img {
       width: 26px;
       height: 26px;
@@ -40,7 +46,6 @@ const Tabs = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const tabState = useSelector((state: any) => state.tabState.tabState);
   interface tabProvider {
     name: string;
     id: string;
@@ -61,17 +66,39 @@ const Tabs = () => {
     },
   ]);
 
+  const { genreList, tabState } = useSelector((state: any) => {
+    return {
+      genreList: state.genreList.genreList,
+      tabState: state.tabState.tabState,
+    };
+  });
+
   const handleTabs = (url: string) => {
     navigate(url);
     dispatch(setTabState(url));
   };
+
+  const handleGenre = (data: any) => {
+    dispatch(setGenreType(data));
+  };
   return (
     <TabsBox>
-      <button onClick={() => navigate(-1)}>
-        {location.pathname !== "/" && location.pathname !== "/current" && (
-          <img src="//icons.veryicon.com/png/o/miscellaneous/eva-fill/arrow-back-11.png" />
-        )}
-      </button>
+      {!["/", "/current", "/movie"].includes(location.pathname) && (
+        <button onClick={() => navigate(-1)}>
+          <img
+            src="//icons.veryicon.com/png/o/miscellaneous/eva-fill/arrow-back-11.png"
+            alt=""
+          />
+        </button>
+      )}
+
+      {tabState === "movie" && location.pathname === "/movie" && (
+        <select>
+          {genreList.map((v: any, i: number) => (
+            <option onClick={() => handleGenre(v)}>{v.name}</option>
+          ))}
+        </select>
+      )}
       <ul>
         {tabs.map((v, i) => (
           <li
