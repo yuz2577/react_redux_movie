@@ -1,4 +1,5 @@
-import DetailPage from "./pages/crntMovie/DetailPage";
+import MovieDetailPage from "./pages/movieList/DetailPage";
+import CurrentDetailPage from "./pages/crntMovie/DetailPage";
 import DefaultPage from "./pages/crntMovie/index";
 import MovieListPage from "./pages/movieList/index";
 
@@ -19,13 +20,13 @@ export const routes: Array<object> = [
     path: "/curMovie/:title",
     exact: true,
     strict: false,
-    element: <DetailPage />,
+    element: <CurrentDetailPage />,
   },
   {
-    path: "/movie/:title",
+    path: "/movie/:id",
     exact: true,
     strict: false,
-    element: <DetailPage />,
+    element: <MovieDetailPage />,
   },
   {
     path: "/movie",

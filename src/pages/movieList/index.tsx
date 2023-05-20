@@ -4,7 +4,9 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import {
   getGenreList,
+  getMovieDetail,
   getMovieList,
+  getMovieVideo,
   setGenreType,
   setMovieInfo,
 } from "../../api/action";
@@ -34,9 +36,8 @@ const MovieListPage = () => {
   const state = useSelector((state: any) => state);
   console.log(state);
   const handleUrl = async (data: any) => {
-    console.log(data, "<data");
-    dispatch(setMovieInfo({ ...data }));
-    navigate(`/movie/${data.title}`);
+    navigate(`/movie/${data.id}?${data.title}`);
+    console.log('?????????????????????????')
   };
 
   const addPage = () => {
@@ -53,7 +54,7 @@ const MovieListPage = () => {
     movieArr.map((v: any, i: any) => {
       var genreArr: any = [];
       v.genre_ids.map((a: any) =>
-        genreList.map((value: any, index: any) => {
+        genreList?.map((value: any, index: any) => {
           if (a === value.id) {
             genreArr.push({ name: value.name, id: value.id });
             v.genre_ids = genreArr;
@@ -62,22 +63,22 @@ const MovieListPage = () => {
       );
     });
     dispatch(setMovieList(movieArr));
-    console.log(movieArr, "?????");
     setMovieList(movieArr);
     setFetchSuccess(true);
   };
 
   const fetchData = async (page: number, genre: string) => {
     const genreList = await getGenreList();
+    genreList.genres.unshift({ id: 0, name: '전체' })
     dispatch(setGenreList(genreList.genres));
     const res = await getMovieList(page, "");
-    console.log(res, "<Resres");
+    console.log(genreList, "<Resres");
 
     res.results.map((v: any, i: any) => {
       var genreArr: any = [];
       console.log(v.genre_ids, "<v.genre_ids");
-      v.genre_ids.map((a: any) =>
-        genreList.map((value: any, index: any) => {
+      v?.genre_ids?.map((a: any) =>
+        genreList.genres?.map((value: any, index: any) => {
           if (a === value.id) {
             genreArr.push({ name: value.name, id: value.id });
             v.genre_ids = genreArr;
@@ -85,6 +86,7 @@ const MovieListPage = () => {
         })
       );
     });
+
     dispatch(setMovieList(res.results));
   };
 

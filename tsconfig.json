@@ -14,7 +14,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+     "outDir": "./dist",
+    "noImplicitAny": true, 
+    "sourceMap": true,
   },
-  "include": ["src", "carwling.js"]
+  "include": ["src", "carwling.js", "./**/*.ts","./**/*.tsx", "types"]
 }

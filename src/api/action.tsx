@@ -28,10 +28,8 @@ export const getDetailMovieDT = async (title: string) => {
 export const getMovieList = async (page: number, genre: string) => {
   console.log(process.env.REACT_APP_TMDB_KEY);
   return await fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${
-      process.env.REACT_APP_TMDB_KEY
-    }&with_watch_providers=[8,96,337]&watch_region=KR&language=ko-KR&page=${page}${
-      genre ? `&with_genres=${genre}` : ""
+    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY
+    }&with_watch_providers=[8,96,337]&watch_region=KR&language=ko-KR&page=${page}${genre ? `&with_genres=${genre}` : ""
     }`
   ).then((res) => {
     return res.json();
@@ -41,7 +39,22 @@ export const getMovieList = async (page: number, genre: string) => {
 export const getGenreList = async () => {
   return await fetch(
     `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_TMDB_KEY}&language=ko-KR`
-    // https://api.themoviedb.org/3/genre/movie/list?api_key=<<api_key>>&language=en-US
+  ).then((res) => {
+    return res.json();
+  });
+};
+
+export const getMovieDetail = async (id: string) => {
+  return await fetch(
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}&language=ko-KR`
+  ).then((res) => {
+    return res.json();
+  });
+};
+
+export const getMovieVideo = async (id: string) => {
+  return await fetch(
+    `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.REACT_APP_TMDB_KEY}&language=ko-KR`
   ).then((res) => {
     return res.json();
   });
