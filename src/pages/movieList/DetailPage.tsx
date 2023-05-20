@@ -17,6 +17,8 @@ import {
   setTabState,
 } from "../../api/action";
 import { Image } from "antd";
+import AOS from 'aos'
+import "aos/dist/aos.css";
 import YouTube from "react-youtube";
 
 const DetailPage = () => {
@@ -28,7 +30,16 @@ const DetailPage = () => {
       font-weight: 700;
       width: 100%;
     }
+     .movie_info_container {
+      margin-top: 5px;
+      display: flex;
+      align-items: flex-end;
+      .poster {
+        width: 190px;
+      }
+    }
   `;
+
   const params = useParams();
   const location = useLocation();
   console.log(location.pathname.indexOf("/movie"));
@@ -67,15 +78,29 @@ const DetailPage = () => {
 
   useEffect(() => {
     fetchData();
-  }, [params.id])
+    console.log('????rende')
+    return () => {
+      dispatch(setMovieInfo([]));
+    }
+  }, [])
+  useEffect(() => {
 
+    AOS.init()
+  }, [])
   return (
     <DetailPageContainer>
       <div className="header">{data.title}</div>
-      {/* <iframe width="560" height="315" src={`https://www.youtube.com/embed/${data.video.key}`} title={`${data.title} 예고편`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe> */}
-      {data.video &&
-        <YouTube videoId={`${data?.video.key}`} opts={videoOptions} />
-      }
+      <div className="movie_info_container">
+        <img
+          className="poster"
+          src={`	https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${data?.poster_path}`}
+          alt={`${data.movieNm} 포스터`}
+        />
+      </div>
+      <div data-aos="fade-left" data-aos-delay="1000000000">
+        'gg'
+
+      </div>
 
     </DetailPageContainer >
   );
