@@ -28,8 +28,10 @@ export const getDetailMovieDT = async (title: string) => {
 export const getMovieList = async (page: number, genre: string) => {
   console.log(process.env.REACT_APP_TMDB_KEY);
   return await fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY
-    }&with_watch_providers=[8,96,337]&watch_region=KR&language=ko-KR&page=${page}${genre ? `&with_genres=${genre}` : ""
+    `https://api.themoviedb.org/3/discover/movie?api_key=${
+      process.env.REACT_APP_TMDB_KEY
+    }&with_watch_providers=[8,96,337]&watch_region=KR&language=ko-KR&page=${page}${
+      genre ? `&with_genres=${genre}` : ""
     }`
   ).then((res) => {
     return res.json();
@@ -74,6 +76,12 @@ export const setMovieList = (movieList: any[]) => ({
   payload: movieList,
 });
 
+export const setPage = (page: number) => ({
+  type: "SET_PAGE",
+  payload: page,
+  active: true,
+});
+
 export const setMovieInfo = (movieInfo: movieInfoType.movieInfo[]) => ({
   type: "SET_MOVIEINFO",
   payload: movieInfo,
@@ -99,7 +107,7 @@ export const setGenreList = (genreList: any[]) => ({
   payload: genreList,
 });
 
-export const setGenreType = (genreType: string) => ({
+export const setGenreType = (genreType: any) => ({
   type: "SET_GENRE_TYPE",
   payload: genreType,
 });

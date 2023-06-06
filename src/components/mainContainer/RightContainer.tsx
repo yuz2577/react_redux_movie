@@ -16,15 +16,13 @@ const RightContainer = () => {
       width: 100vw;
     }
     /* margin-left: 3rem; */
-    overflow-x: hidden;
-    overflow-y: scroll;
     height: 100vh;
     background: white;
     /* padding: 0 10px; */
     box-shadow: 0px 0px 80px 20px rgba(0, 0, 0, 0.06);
     position: relative;
     .fixed {
-      height: 90px;
+      height: 10vh;
       box-shadow: 0px 0px 80px 20px rgba(0, 0, 0, 0.06);
       /* border: solid 2px red; */
       position: fixed;
@@ -35,7 +33,11 @@ const RightContainer = () => {
       z-index: 10;
     }
     .page {
-      margin-top: 95px;
+      padding-top: 10px;
+      position: relative;
+      height: 92.5vh;
+      top: 10vh;
+      overflow: scroll;
     }
   `;
 

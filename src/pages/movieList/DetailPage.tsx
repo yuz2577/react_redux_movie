@@ -17,7 +17,7 @@ import {
   setTabState,
 } from "../../api/action";
 import { Image } from "antd";
-import AOS from 'aos'
+import AOS from "aos";
 import "aos/dist/aos.css";
 import YouTube from "react-youtube";
 
@@ -30,12 +30,20 @@ const DetailPage = () => {
       font-weight: 700;
       width: 100%;
     }
-     .movie_info_container {
+    .movie_info_container {
       margin-top: 5px;
       display: flex;
       align-items: flex-end;
       .poster {
         width: 190px;
+      }
+    }
+    .txt_box {
+      margin-left: 10px;
+      font-size: 13px;
+      text {
+        margin-left: 10px;
+        font-weight: 600;
       }
     }
   `;
@@ -46,7 +54,7 @@ const DetailPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const data = useSelector((state: any) => state.movieInfo.movieInfo);
-  console.log(data, '<data')
+  console.log(data, "<data");
   const tabState = useSelector((state: any) => state.tabState);
 
   const videoOptions = {
@@ -61,32 +69,30 @@ const DetailPage = () => {
       loop: 1,
       modetbranding: 1,
       title: 0,
-    }
+    },
   };
 
   const fetchData = async () => {
     if (params.id) {
-
       let detailData = await getMovieDetail(params.id);
       await getMovieVideo(params.id).then((res) => {
-        console.log(res)
-        detailData = { ...detailData, video: res.results[0] }
-      })
+        console.log(res);
+        detailData = { ...detailData, video: res.results[0] };
+      });
       dispatch(setMovieInfo({ ...detailData }));
     }
-  }
+  };
 
   useEffect(() => {
     fetchData();
-    console.log('????rende')
+    console.log("????rende");
     return () => {
       dispatch(setMovieInfo([]));
-    }
-  }, [])
+    };
+  }, []);
   useEffect(() => {
-
-    AOS.init()
-  }, [])
+    AOS.init();
+  }, []);
   return (
     <DetailPageContainer>
       <div className="header">{data.title}</div>
@@ -96,13 +102,43 @@ const DetailPage = () => {
           src={`	https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${data?.poster_path}`}
           alt={`${data.movieNm} 포스터`}
         />
+        <div className="txt_box">
+          <ul>
+            <li>
+              <span>장르</span>
+              <text>
+                {data?.genres?.map(
+                  (v: any, i: number) =>
+                    `${v.name}${
+                      data.genres.length > 1 && i !== data.genres.length - 1
+                        ? ","
+                        : ""
+                    }`
+                )}
+              </text>
+            </li>
+            <li>
+              <span>개봉일</span>
+              <text>{data.release_date}</text>
+            </li>
+            <li>
+              <span>상영시간</span>
+              <text>{data.runtime}분</text>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div data-aos="fade-left" data-aos-delay="1000000000">
-        'gg'
-
+      <div className="story">
+        {data.tagline && (
+          <p data-aos="fade-left" data-aos-delay="1000000000">
+            {`<<${data.tagline}>>`}
+          </p>
+        )}
+        <p data-aos="fade-left" data-aos-delay="5000000000">
+          {data.overview}
+        </p>
       </div>
-
-    </DetailPageContainer >
+    </DetailPageContainer>
   );
 };
 

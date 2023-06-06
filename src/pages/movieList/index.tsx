@@ -9,6 +9,7 @@ import {
   getMovieVideo,
   setGenreType,
   setMovieInfo,
+  setPage,
 } from "../../api/action";
 import { useInView } from "react-intersection-observer";
 import { setGenreList, setMovieList } from "../../api/action";
@@ -28,22 +29,25 @@ const MovieListPage = () => {
     threshold: 0,
   });
 
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const [fetchSuccess, setFetchSuccess] = useState(false);
   const { genreType, genreList } = useSelector((state: any) => state.genreList);
-  console.log(genreList, "<gen");
+  console.log(genreType, "<gen");
   const { movieList } = useSelector((state: any) => state.movieList);
+  const { page, active } = useSelector((state: any) => state.page);
   const state = useSelector((state: any) => state);
   console.log(state);
   const handleUrl = async (data: any) => {
     navigate(`/movie/${data.id}?${data.title}`);
-    console.log('?????????????????????????')
+    console.log("?????????????????????????");
   };
 
   const addPage = () => {
-    setPage(page + 1);
+    dispatch(setPage(page + 1));
     console.log("더해졌다!");
+    fetchMediaProvider(page + 1, genreType.id);
   };
+  console.log(page, "<page state");
 
   const fetchMediaProvider = async (page: number, genre: string) => {
     const res = await getMovieList(page, genre);
@@ -69,7 +73,7 @@ const MovieListPage = () => {
 
   const fetchData = async (page: number, genre: string) => {
     const genreList = await getGenreList();
-    genreList.genres.unshift({ id: 0, name: '전체' })
+    genreList.genres.unshift({ id: 0, name: "전체" });
     dispatch(setGenreList(genreList.genres));
     const res = await getMovieList(page, "");
     console.log(genreList, "<Resres");
@@ -91,12 +95,11 @@ const MovieListPage = () => {
   };
 
   useEffect(() => {
-    if (movieList.length === 0) {
+    if (movieList.length === 0 && !active) {
       fetchData(page, genreType.id);
     } else {
-      fetchMediaProvider(page, genreType.id);
     }
-  }, [page]);
+  }, [page, active]);
 
   console.log(page, page);
 
@@ -107,6 +110,10 @@ const MovieListPage = () => {
       addPage();
     }
   }, [inView, fetchSuccess]);
+
+  // useEffect(() => {
+  //   fetchMediaProvider(page, genreType.id);
+  // }, [genreType]);
 
   return (
     <>

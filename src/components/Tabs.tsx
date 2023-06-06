@@ -4,7 +4,12 @@ import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setGenreType, setTabState } from "../api/action";
+import {
+  getMovieList,
+  setGenreType,
+  setMovieList,
+  setTabState,
+} from "../api/action";
 const Tabs = () => {
   const TabsBox = styled.div`
     display: flex;
@@ -66,10 +71,12 @@ const Tabs = () => {
     },
   ]);
 
-  const { genreList, tabState } = useSelector((state: any) => {
+  const { genreList, tabState, page, genreType } = useSelector((state: any) => {
     return {
       genreList: state.genreList.genreList,
       tabState: state.tabState.tabState,
+      page: state.page,
+      genreType: state.genreList.genreType,
     };
   });
 
@@ -78,8 +85,30 @@ const Tabs = () => {
     dispatch(setTabState(url));
   };
 
-  const handleGenre = (data: any) => {
-    dispatch(setGenreType(data));
+  const handleGenre = async (e: any) => {
+    console.log(e.target.value, "<Data genre");
+    dispatch(setGenreType({ id: e.target.value, name: "액션" }));
+
+    console.log(e.target.value);
+    const res = await getMovieList(page, e.target.value);
+    console.log(genreList, "<Resres");
+
+    res.results.map((v: any, i: any) => {
+      var genreArr: any = [];
+      console.log(v.genre_ids, "<v.genre_ids");
+      v?.genre_ids?.map((a: any) =>
+        genreList?.map((value: any, index: any) => {
+          console.log(a, value.id, "<<<aa");
+          if (a === value.id) {
+            genreArr.push({ name: value.name, id: value.id });
+            v.genre_ids = genreArr;
+          }
+        })
+      );
+    });
+
+    console.log(res.results);
+    dispatch(setMovieList(res.results));
   };
   return (
     <TabsBox>
@@ -93,9 +122,11 @@ const Tabs = () => {
       )}
 
       {tabState === "movie" && location.pathname === "/movie" && (
-        <select>
+        <select onChange={(e) => handleGenre(e)}>
           {genreList.map((v: any, i: number) => (
-            <option onClick={() => handleGenre(v)}>{v.name}</option>
+            <option onClick={(v) => console.log(v)} value={v.id}>
+              {v.name}
+            </option>
           ))}
         </select>
       )}

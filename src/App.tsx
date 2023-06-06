@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 import RightContainer from "./components/mainContainer/RightContainer";
 import LeftContainer from "./components/mainContainer/LeftContainer";
 
-
 function App() {
   const Body = styled.body`
     /* ===== Scrollbar CSS ===== */
@@ -63,6 +62,7 @@ function App() {
       > p {
         display: flex;
         justify-content: flex-end;
+        margin-top: 0;
       }
       ul {
         padding: 0;
@@ -112,8 +112,6 @@ function App() {
       }
     }
   `;
-
-
 
   return (
     <Body>

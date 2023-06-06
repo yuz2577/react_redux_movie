@@ -8,6 +8,7 @@ import sessionStorage from "redux-persist/es/storage/session";
 import tabStateSet from "./reducer/tanStateReducer";
 import genreListSet from "./reducer/genreReducer";
 import movieList from "./reducer/movieListReducer";
+import pageSet from "./reducer/pageReducer";
 
 export interface persistData {
   key: string;
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   loading: loadingSet,
   tabState: tabStateSet,
   genreList: genreListSet,
+  page: pageSet,
 });
 // export type RootState = ReturnType<typeof rootReducer>;
 
